@@ -1,0 +1,139 @@
+$primary: #6f42c1;
+$dark-purple: #6610f2;
+$teal: #20c997;
+
+* {
+    box-sizing: border-box;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+}
+
+.App {
+    align-items: center;
+    background: rgb(30,0,138);
+    background: linear-gradient(145deg, rgba(30,0,138,1) 25%, rgba(128,128,128,1) 75%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-height: 100vh;
+    min-width: 100vh;
+    .logo {
+        display: flex;
+        img {
+            max-height: 80px;
+        }
+    }
+    .hero {
+        align-items: center;
+        background-color: white;
+        border-radius: 15px;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        height: 75vh;
+        justify-content: center;
+        padding: 20px;
+        width: 70%;
+        .metamask-btn {
+            width: 50%;
+            font-size: 20px;
+            outline: none;
+            border-radius: 15px;
+            border: 2px solid black;
+            background: $dark-purple;
+            padding: 15px;
+            margin: 10px;
+        }
+        .metamask-btn:hover {
+            cursor: pointer;
+            background-color: $primary;
+            width: 270px;
+        }
+        .account-container {
+            color: black;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            text-align: center;
+        }
+        .balance-container {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+            font-size: 14px;
+        }
+        .info-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            h3 {
+                text-align: center;
+            }
+            .button-container {
+                display: flex;
+                justify-content: space-evenly;
+            }
+            button {
+                border: 2px solid black !important;
+                font-size: 20px;
+                outline: none;
+                border: none;
+                background: $dark-purple;
+                padding: 10px;
+                margin: 10px;
+                border-radius: 15px;
+                width: 50%;
+            }
+            button:hover {
+                background-color: $primary;
+                cursor: pointer;
+                transition: .25s ease-in;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 812px) {
+    .App {
+        width: 100%;
+        overflow-x: hidden;
+        min-width: 100% !important;
+        .account-container {
+            h1 {
+                font-size: 14px !important;
+            }
+        }
+        .balance-container {
+            font-size: 12px !important;
+        }
+        .hero {
+            background: transparent;
+            justify-content: flex-start !important;
+            width: 100%;
+            .metamask-btn {
+                font-size: 14px !important;
+                width: 270px !important;
+            }
+            .info-container {
+                width: 100% !important;
+                button {
+                    font-size: 14px !important;
+                    width: 50% !important;
+                    max-width: 270px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-height: 500px) {
+    .hero {
+        background-color: transparent !important;
+    }
+}
