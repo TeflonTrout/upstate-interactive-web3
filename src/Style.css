@@ -12,9 +12,11 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background: #1e008a;
-  background: linear-gradient(145deg, #1e008a 25%, gray 75%);
-  color: white;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.6)), to(rgba(0, 0, 0, 0.6))), url("./images/background.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("./images/background.jpg");
+  background-position: center;
+  background-size: cover;
+  color: black;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -43,8 +45,8 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: white;
   border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.7);
   color: black;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -53,29 +55,30 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: 75vh;
+  height: 65vh;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding: 20px;
-  width: 70%;
+  padding: 10px;
+  width: 60%;
 }
 
 .App .hero .metamask-btn {
-  width: 50%;
+  width: 270px;
   font-size: 20px;
   outline: none;
   border-radius: 15px;
   border: 2px solid black;
-  background: #6610f2;
+  background: #5400dd;
+  background: linear-gradient(145deg, #5400dd 25%, #6f42c1 75%);
   padding: 15px;
   margin: 10px;
 }
 
 .App .hero .metamask-btn:hover {
   cursor: pointer;
-  background-color: #6f42c1;
-  width: 270px;
+  -webkit-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
 }
 
 .App .hero .account-container {
@@ -98,7 +101,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   margin: 10px;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .App .hero .info-container {
@@ -131,6 +134,10 @@
           justify-content: space-evenly;
 }
 
+.App .hero .info-container .get-count-btn {
+  width: 200px;
+}
+
 .App .hero .info-container button {
   border: 2px solid black !important;
   font-size: 20px;
@@ -141,26 +148,32 @@
   margin: 10px;
   border-radius: 15px;
   width: 50%;
+  -webkit-transition: .25s ease-in;
+  transition: .25s ease-in;
 }
 
 .App .hero .info-container button:hover {
   background-color: #6f42c1;
   cursor: pointer;
-  -webkit-transition: .25s ease-in;
-  transition: .25s ease-in;
+  -webkit-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
 }
 
 @media only screen and (max-width: 812px) {
+  * {
+    color: white !important;
+    font-weight: 400;
+  }
   .App {
     width: 100%;
     overflow-x: hidden;
     min-width: 100% !important;
   }
   .App .account-container h1 {
-    font-size: 14px !important;
+    font-size: 20px !important;
   }
-  .App .balance-container {
-    font-size: 12px !important;
+  .App .balance-container h2 {
+    font-size: 18px !important;
   }
   .App .hero {
     background: transparent;
@@ -178,12 +191,20 @@
   }
   .App .hero .info-container button {
     font-size: 14px !important;
-    width: 50% !important;
-    max-width: 270px;
+    width: 90px !important;
+  }
+  .App .hero .info-container .get-count-btn {
+    width: 200px !important;
+  }
+  .App .logo img {
+    max-height: 60px;
   }
 }
 
 @media only screen and (max-height: 500px) {
+  * {
+    color: white !important;
+  }
   .hero {
     background-color: transparent !important;
   }

@@ -13,9 +13,12 @@ $teal: #20c997;
 
 .App {
     align-items: center;
-    background: rgb(30,0,138);
-    background: linear-gradient(145deg, rgba(30,0,138,1) 25%, rgba(128,128,128,1) 75%);
-    color: white;
+    // background: rgba(0,0,0,0.8);
+    // background: linear-gradient(145deg, rgba(30,0,138,1) 25%, rgba(128,128,128,1) 75%);
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./images/background.jpg');
+    background-position: center;
+    background-size:cover;
+    color: black;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -29,29 +32,29 @@ $teal: #20c997;
     }
     .hero {
         align-items: center;
-        background-color: white;
         border-radius: 15px;
+        background-color: rgba(255, 255, 255, 0.7);
         color: black;
         display: flex;
         flex-direction: column;
-        height: 75vh;
+        height: 65vh;
         justify-content: center;
-        padding: 20px;
-        width: 70%;
+        padding: 10px;
+        width: 60%;
         .metamask-btn {
-            width: 50%;
+            width: 270px;
             font-size: 20px;
             outline: none;
             border-radius: 15px;
             border: 2px solid black;
-            background: $dark-purple;
+            background: rgb(84,0,221);
+            background: linear-gradient(145deg, rgba(84,0,221,1) 25%, rgba(111,66,193,1) 75%);
             padding: 15px;
             margin: 10px;
         }
         .metamask-btn:hover {
             cursor: pointer;
-            background-color: $primary;
-            width: 270px;
+            transition: .25s ease-in-out;
         }
         .account-container {
             color: black;
@@ -64,7 +67,7 @@ $teal: #20c997;
             display: flex;
             justify-content: center;
             margin: 10px;
-            font-size: 14px;
+            font-size: 18px;
         }
         .info-container {
             display: flex;
@@ -79,6 +82,9 @@ $teal: #20c997;
                 display: flex;
                 justify-content: space-evenly;
             }
+            .get-count-btn {
+                width: 200px;
+            }
             button {
                 border: 2px solid black !important;
                 font-size: 20px;
@@ -89,28 +95,35 @@ $teal: #20c997;
                 margin: 10px;
                 border-radius: 15px;
                 width: 50%;
+                transition: .25s ease-in;
             }
             button:hover {
                 background-color: $primary;
                 cursor: pointer;
-                transition: .25s ease-in;
+                transition: .25s ease-in-out;
             }
         }
     }
 }
 
 @media only screen and (max-width: 812px) {
+    * {
+        color: white !important;
+        font-weight: 400;
+    }
     .App {
         width: 100%;
         overflow-x: hidden;
         min-width: 100% !important;
         .account-container {
             h1 {
-                font-size: 14px !important;
+                font-size: 20px !important;
             }
         }
         .balance-container {
-            font-size: 12px !important;
+            h2{
+                font-size: 18px !important;
+            }
         }
         .hero {
             background: transparent;
@@ -124,15 +137,25 @@ $teal: #20c997;
                 width: 100% !important;
                 button {
                     font-size: 14px !important;
-                    width: 50% !important;
-                    max-width: 270px;
+                    width: 90px !important;
                 }
+                .get-count-btn {
+                    width: 200px !important
+                }
+            }
+        }
+        .logo {
+            img {
+                max-height: 60px;
             }
         }
     }
 }
 
 @media only screen and (max-height: 500px) {
+    * {
+        color: white !important;
+    }
     .hero {
         background-color: transparent !important;
     }
