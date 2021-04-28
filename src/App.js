@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, NavLink } from 'react-router-dom';
 import Web3 from 'web3';
 import { ABI_ADDRESS, ABI_CONTRACT } from './config.js';
 import { Snackbar, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Emoji from './Emoji.js';
-import Logo from './images/upstate-interactive.png';
+import UpstateLogo from './components/UpstateLogo.js';
 import './Style.css';
 
 function App() {
@@ -20,11 +19,12 @@ function App() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [failedSnackbarOpen, setFailedSnackbarOpen] = useState(false);
 
-  //Anytime 'myAccount' is changed, run the getBalance function
+  //Anytime 'myAccount' is updated or changed, run the getBalance function
   useEffect(() => {
     getBalance(myAccount, web3);
   }, [myAccount])
 
+  //Pull all of the blockchain data needed from a web3 provider
   async function loadBlockchainData() {
     try {
       const web3 = new Web3(Web3.givenProvider);
@@ -70,6 +70,7 @@ function App() {
     }
   }
 
+  //Function to get the balance of current web3 account
   const getBalance = async (myAccount, web3) => {
     if(web3 !== undefined){
         const balance = await web3.eth.getBalance(myAccount);
@@ -79,6 +80,8 @@ function App() {
     }
   };
 
+  //function to check if the current browser is able to connect to 
+  //ethereum network. If so all the data from the web3 provider is pulled
   const web3Connect = async () => {
     try {
       if(window.ethereum.isConnected() === true) {
@@ -90,6 +93,7 @@ function App() {
     }
   }
 
+  //A function that calls the Solidity contract's 'getCount' function
   const getCount = async () => {
     if(contract !== undefined) {
       const getCount = await contract.methods.getCount().call({ from: myAccount });
@@ -100,6 +104,7 @@ function App() {
     }
   }
 
+  //Calls the Soldity 'increment' function
   const handleIncrease = async (e) => {
     e.preventDefault();
     if(contract !== undefined) {
@@ -112,6 +117,7 @@ function App() {
     }
   }
 
+  //Calls the Solidity 'decrement' function
   const handleDecrease = async (e) => {
     e.preventDefault();
     if(contract !== undefined) {
@@ -124,7 +130,8 @@ function App() {
     }
   }
 
-  //Check to see if a Web3 provider is installed
+  //Check to see if a Web3 provider is installed if so, an
+  //accountsChanged and isConnected event listeners are added
   if(window.ethereum) {
     //Handle an account change
     window.ethereum.on('accountsChanged', web3Connect);
@@ -133,12 +140,15 @@ function App() {
     console.error('*** PLEASE USE A METAMASK COMPATIBLE BROWSER ***')
   }
 
+  //Function to capitalize the first letter of a string
   function capitalizeFirstLetter(network) {
     if (network !== undefined) {
       return network.charAt(0).toUpperCase() + network.slice(1);
     }
   }
 
+  //closeSnackbar and closeFailedSnackbar are functions to close
+  //the snackbar modal after a transaction is completed or failed
   const closeSnackbar = (e, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -155,9 +165,7 @@ function App() {
  
   return (
     <div className='App'>
-      <div className='logo'>
-        <img src={Logo} alt='Upstate Interactive'/>
-      </div>
+      <UpstateLogo />
       <div className='extra-info-container'>
         {isConnected ? <h3>Connected to: {capitalizeFirstLetter(network)} Network</h3> : '' }
       </div>
@@ -168,20 +176,20 @@ function App() {
               color: isConnected ? 'black' : 'darkred',
               fontSize: isConnected ? '28px' : '16px'
             }}>
-            {isConnected ? `Account: ${myAccount.slice(0,10)}...` : 'Please Connect MetaMask'}
+            {isConnected 
+            ? `Account: ${myAccount.slice(0,10)}...` 
+            : 'Please Connect MetaMask'}
           </h1>
           <button 
             className='metamask-btn' 
             style={{display: isConnected ? 'none' : 'block'}}
-            onClick={e => web3Connect(e)}
-          >
+            onClick={e => web3Connect(e)}>
             Connect MetaMask 
             <Emoji symbol='🦊' label='fox'/>
           </button>
           {isConnected
           ? ""
-          : <h5 onClick={function(){window.open('https://metamask.io', "_blank")}}>Don't have a MetaMask Account?</h5>
-          }
+          : <h5 onClick={function(){window.open('https://metamask.io', "_blank")}}>Don't have a MetaMask Account?</h5>}
         <div className='account-container'>
           <h1 style={{display: isLoading ? 'flex' : 'none'}}>Loading...</h1>
         </div>
@@ -189,8 +197,7 @@ function App() {
           <h2>
             {isLoading
             ? ''
-            : `Balance: ${walletBalance ? walletBalance : '0'} ETH`
-          }
+            : `Balance: ${walletBalance ? walletBalance : '0'} ETH`}
           </h2>
         </div>
         <div className='info-container'>
