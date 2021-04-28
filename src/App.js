@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import { ABI_ADDRESS, ABI_CONTRACT } from './config.js';
 import { Snackbar, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import Emoji from './Emoji.js';
+import Emoji from './components/Emoji.js';
 import UpstateLogo from './components/UpstateLogo.js';
 import './Style.css';
 
