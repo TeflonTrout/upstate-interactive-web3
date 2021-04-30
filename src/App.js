@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import { ABI_ADDRESS, ABI_CONTRACT } from './config.js';
-import { Snackbar, IconButton } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
 import Network from './components/Network.js'
 import Account from './components/Account.js'
 import MetaMaskButton from './components/MetaMaskButton.js'
@@ -20,8 +18,6 @@ function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [network, setNetwork] = useState();
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [failedSnackbarOpen, setFailedSnackbarOpen] = useState(false);
 
   //Anytime 'myAccount' is updated or changed, run the getBalance function
   useEffect(() => {
@@ -103,16 +99,11 @@ function App() {
     }
   }
 
-  const reloadPage = () => {
-    window.location.reload()
-  }
-
   //A function that calls the Solidity contract's 'getCount' function
   const getCount = async () => {
     if(contract !== undefined) {
       const getCount = await contract.methods.getCount().call({ from: myAccount });
       setCount(getCount);
-      setSnackbarOpen(true);
     } else {
       console.error('PLEASE CONNECT TO METAMASK')
     }
@@ -121,9 +112,7 @@ function App() {
   //Calls the Soldity 'increment' function
   const handleIncrease = async () => {
     if(contract !== undefined) {
-      const increase = await contract.methods.increment().send({ from:myAccount })
-        .on('receipt', function(){setSnackbarOpen(true)})
-        .on('error', function(){setFailedSnackbarOpen(true)})
+      const increase = await contract.methods.increment().send({ from:myAccount });
       return increase;
     } else {
       console.error('PLEASE CONNECT TO METAMASK')
@@ -133,49 +122,11 @@ function App() {
   //Calls the Solidity 'decrement' function
   const handleDecrease = async () => {
     if(contract !== undefined) {
-      const decrease = await contract.methods.decrement().send({ from:myAccount })
-        .on('receipt', function(){setSnackbarOpen(true)})
-        .on('error', function(){setFailedSnackbarOpen(true)})
+      const decrease = await contract.methods.decrement().send({ from:myAccount });
       return decrease
     } else {
       console.error('PLEASE CONNECT TO METAMASK')
     }
-  }
-
-  //Function for when the account is changed
-  //Checks to make sure the account is connected before
-  //loading the data
-  const accountChanged = () => {
-     if (isConnected === true) {
-       loadBlockchainData();
-     }
-   }
-
-  //Check to see if a Web3 provider is installed if so, an
-  //accountsChanged and isConnected event listeners are added
-  if(window.ethereum) {
-    //If the account or network is changed the page is reloaded for security reasons
-    window.ethereum.on('accountsChanged', accountChanged);
-    window.ethereum.on('networkChanged', reloadPage);
-    window.ethereum.isConnected();
-  } else {
-    console.error('*** PLEASE USE A METAMASK COMPATIBLE BROWSER ***')
-  }
-
-  //closeSnackbar and closeFailedSnackbar are functions to close
-  //the snackbar modal after a transaction is completed or failed
-  const closeSnackbar = (e, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setSnackbarOpen(false)
-  }
-
-  const closeFailedSnackbar = (e, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setFailedSnackbarOpen(false)
   }
  
   return (
@@ -196,40 +147,6 @@ function App() {
         <Balance isLoading={isLoading} balance={walletBalance}/>
         <InfoContainer count={count} increase={handleIncrease} decrease={handleDecrease} getCount={getCount} />
       </div>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        open={snackbarOpen}
-        autoHideDuration={5000}
-        onClose={e => closeSnackbar(e)}
-        message="Transaction Confirmed"
-        action={
-          <div>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={e => closeSnackbar(e)}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </div>
-        }
-      />
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        open={failedSnackbarOpen}
-        autoHideDuration={5000}
-        onClose={e => closeFailedSnackbar(e)}
-        message="Transaction Failed"
-        action={
-          <div>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={e => closeFailedSnackbar(e)}>
-              <CloseIcon size='small' />
-            </IconButton>
-          </div>
-        }
-      />
     </div>
   );
 }
