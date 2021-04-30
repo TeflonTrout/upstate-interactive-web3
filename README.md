@@ -8,7 +8,7 @@ In order for the application to run, the user must connect a MetaMask account to
 
 The user may then call contract functions provided from the Solidity contract at address '0x75372E5EE5eB616E7e64156Bcae5294FA8F0c319'. This contract allows users to Increment or Decrement a count based upon the caller's address. Counts are dependent of each users address.
 
-Once the transaction is completed in MetaMask the user can call a getCount function from the contract ABI that will allow them to update the current count.
+Once the transaction is completed in MetaMask the user can call a getCount function from the contract ABI that will allow them to update the current count based on their address.
 
 ## Available Scripts
 
