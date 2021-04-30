@@ -3,7 +3,11 @@ import Web3 from 'web3';
 import { ABI_ADDRESS, ABI_CONTRACT } from './config.js';
 import { Snackbar, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import Emoji from './components/Emoji.js';
+import Network from './components/Network.js'
+import Account from './components/Account.js'
+import MetaMaskButton from './components/MetaMaskButton.js'
+import Balance from './components/Balance.js'
+import InfoContainer from './components/InfoContainer.js'
 import UpstateLogo from './components/UpstateLogo.js';
 import './Style.css';
 
@@ -93,6 +97,10 @@ function App() {
     }
   }
 
+  const reloadPage = () => {
+    window.location.reload(false)
+  }
+
   //A function that calls the Solidity contract's 'getCount' function
   const getCount = async () => {
     if(contract !== undefined) {
@@ -105,8 +113,7 @@ function App() {
   }
 
   //Calls the Soldity 'increment' function
-  const handleIncrease = async (e) => {
-    e.preventDefault();
+  const handleIncrease = async () => {
     if(contract !== undefined) {
       const increase = await contract.methods.increment().send({ from:myAccount })
         .on('receipt', function(){setSnackbarOpen(true)})
@@ -118,8 +125,7 @@ function App() {
   }
 
   //Calls the Solidity 'decrement' function
-  const handleDecrease = async (e) => {
-    e.preventDefault();
+  const handleDecrease = async () => {
     if(contract !== undefined) {
       const decrease = await contract.methods.decrement().send({ from:myAccount })
         .on('receipt', function(){setSnackbarOpen(true)})
@@ -133,18 +139,11 @@ function App() {
   //Check to see if a Web3 provider is installed if so, an
   //accountsChanged and isConnected event listeners are added
   if(window.ethereum) {
-    //Handle an account change
-    window.ethereum.on('accountsChanged', web3Connect);
+    //If the account is changed the page is reloaded for security reasons
+    window.ethereum.on('accountsChanged', reloadPage);
     window.ethereum.isConnected();
   } else {
     console.error('*** PLEASE USE A METAMASK COMPATIBLE BROWSER ***')
-  }
-
-  //Function to capitalize the first letter of a string
-  function capitalizeFirstLetter(network) {
-    if (network !== undefined) {
-      return network.charAt(0).toUpperCase() + network.slice(1);
-    }
   }
 
   //closeSnackbar and closeFailedSnackbar are functions to close
@@ -166,48 +165,20 @@ function App() {
   return (
     <div className='App'>
       <UpstateLogo />
-      <div className='extra-info-container'>
-        {isConnected ? <h3>Connected to: {capitalizeFirstLetter(network)} Network</h3> : '' }
-      </div>
+      {isConnected 
+      ? <Network isConnected={isConnected} network={network} /> 
+      : ""}
       <div className='hero'>
-          <h1
-            style={{
-              display: isLoading ? 'none' : '',
-              color: isConnected ? 'black' : 'darkred',
-              fontSize: isConnected ? '28px' : '16px'
-            }}>
-            {isConnected 
-            ? `Account: ${myAccount.slice(0,10)}...` 
-            : 'Please Connect MetaMask'}
-          </h1>
-          <button 
-            className='metamask-btn' 
-            style={{display: isConnected ? 'none' : 'block'}}
-            onClick={e => web3Connect(e)}>
-            Connect MetaMask 
-            <Emoji symbol='🦊' label='fox'/>
-          </button>
+        <Account isLoading={isLoading} isConnected={isConnected} myAccount={myAccount} />
+          <MetaMaskButton isConnected={isConnected} web3Connect={web3Connect}/>
           {isConnected
           ? ""
           : <h5 onClick={function(){window.open('https://metamask.io', "_blank")}}>Don't have a MetaMask Account?</h5>}
         <div className='account-container'>
           <h1 style={{display: isLoading ? 'flex' : 'none'}}>Loading...</h1>
         </div>
-        <div className='balance-container'>
-          <h2>
-            {isLoading
-            ? ''
-            : `Balance: ${walletBalance ? walletBalance : '0'} ETH`}
-          </h2>
-        </div>
-        <div className='info-container'>
-          <div className='button-container'>
-            <button className='increase-btn' onClick={e => handleIncrease(e)}>Increment</button>
-            <button className='decrease-btn' onClick={e => handleDecrease(e)}>Decrement</button>
-          </div>
-          <h2>Current Count: {count}</h2>
-          <button className='get-count-btn' onClick={e => getCount(e)}>Get Count</button>
-        </div>
+        <Balance isLoading={isLoading} balance={walletBalance}/>
+        <InfoContainer count={count} increase={handleIncrease} decrease={handleDecrease} getCount={getCount} />
       </div>
       <Snackbar
         anchorOrigin={{
