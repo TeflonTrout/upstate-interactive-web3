@@ -43,13 +43,17 @@ $teal: #20c997;
         height: 65vh;
         justify-content: center;
         padding: 10px;
-        width: 60%;
-        h5 {
-            color: blue
+        width: 500px;
+        .no-account-btn {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            color: blue;
         }
-        h5:hover {
-            color: darkblue;
+        .no-account-btn:hover {
             cursor: pointer;
+            transition: .25s ease-in;
+            color: darkblue;
         }
         .metamask-btn {
             width: 270px;
@@ -104,7 +108,7 @@ $teal: #20c997;
                 padding: 10px;
                 margin: 10px;
                 border-radius: 15px;
-                width: 50%;
+                width: 120px;
                 transition: .25s ease-in;
             }
             button:hover {
@@ -123,7 +127,6 @@ $teal: #20c997;
     }
     .App {
         width: 100%;
-        overflow-x: hidden;
         min-width: 100% !important;
         .account-container {
             h1 {
@@ -139,6 +142,9 @@ $teal: #20c997;
             background: transparent;
             justify-content: flex-start !important;
             width: 100%;
+            .no-account-btn {
+                color: rgb(44, 171, 255) !important;
+            }
             .metamask-btn {
                 font-size: 14px !important;
                 width: 270px !important;
@@ -162,7 +168,7 @@ $teal: #20c997;
     }
 }
 
-@media only screen and (max-height: 500px) {
+@media only screen and (max-height: 590px) {
     * {
         color: white !important;
     }

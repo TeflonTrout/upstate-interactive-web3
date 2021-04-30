@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Application Renders Correctly 1`] = `ShallowWrapper {}`;
+
+exports[`App component 1`] = `
+<div
+  className="App"
+>
+  <div
+    className="logo"
+  >
+    <img
+      alt="Upstate Interactive"
+      src="upstate-interactive.png"
+    />
+  </div>
+  
+  <div
+    className="hero"
+  >
+    <div>
+      <h1
+        style={
+          Object {
+            "color": "darkred",
+            "display": "",
+            "fontSize": "16px",
+          }
+        }
+      >
+        Please Connect MetaMask
+      </h1>
+    </div>
+    <div>
+      <button
+        className="metamask-btn"
+        onClick={[Function]}
+        style={
+          Object {
+            "display": "block",
+          }
+        }
+      >
+        Connect MetaMask
+        <span
+          aria-hidden="false"
+          aria-label="fox"
+          className="emoji"
+          role="img"
+        >
+          🦊
+        </span>
+      </button>
+    </div>
+    <button
+      className="no-account-btn"
+      onClick={[Function]}
+    >
+      Don't have a MetaMask Account?
+    </button>
+    <div
+      className="account-container"
+    >
+      <h1
+        style={
+          Object {
+            "display": "none",
+          }
+        }
+      >
+        Loading...
+      </h1>
+    </div>
+    <div
+      className="balance-container"
+    >
+      <h2>
+        Balance: 0 ETH
+      </h2>
+    </div>
+    <div
+      className="info-container"
+    >
+      <div
+        className="button-container"
+      >
+        <button
+          className="increase-btn"
+          onClick={[Function]}
+        >
+          Increment
+        </button>
+        <button
+          className="decrease-btn"
+          onClick={[Function]}
+        >
+          Decrement
+        </button>
+      </div>
+      <h2>
+        Current Count: 
+      </h2>
+      <button
+        className="get-count-btn"
+        onClick={[Function]}
+      >
+        Get Count
+      </button>
+    </div>
+  </div>
+</div>
+`;

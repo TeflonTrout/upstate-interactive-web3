@@ -64,16 +64,21 @@
       -ms-flex-pack: center;
           justify-content: center;
   padding: 10px;
-  width: 60%;
+  width: 500px;
 }
 
-.App .hero h5 {
+.App .hero .no-account-btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
   color: blue;
 }
 
-.App .hero h5:hover {
-  color: darkblue;
+.App .hero .no-account-btn:hover {
   cursor: pointer;
+  -webkit-transition: .25s ease-in;
+  transition: .25s ease-in;
+  color: darkblue;
 }
 
 .App .hero .metamask-btn {
@@ -160,7 +165,7 @@
   padding: 10px;
   margin: 10px;
   border-radius: 15px;
-  width: 50%;
+  width: 120px;
   -webkit-transition: .25s ease-in;
   transition: .25s ease-in;
 }
@@ -179,7 +184,6 @@
   }
   .App {
     width: 100%;
-    overflow-x: hidden;
     min-width: 100% !important;
   }
   .App .account-container h1 {
@@ -194,6 +198,9 @@
         -ms-flex-pack: start !important;
             justify-content: flex-start !important;
     width: 100%;
+  }
+  .App .hero .no-account-btn {
+    color: #2cabff !important;
   }
   .App .hero .metamask-btn {
     font-size: 14px !important;
@@ -214,7 +221,7 @@
   }
 }
 
-@media only screen and (max-height: 500px) {
+@media only screen and (max-height: 590px) {
   * {
     color: white !important;
   }

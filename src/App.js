@@ -25,10 +25,16 @@ function App() {
 
   //Anytime 'myAccount' is updated or changed, run the getBalance function
   useEffect(() => {
-    getBalance(myAccount, web3);
-  }, [myAccount])
+    try {
+      if(web3 !== undefined && myAccount !== undefined) {
+        getBalance(myAccount, web3);
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }, [myAccount,web3])
 
-  //Pull all of the blockchain data needed from a web3 provider
+  //Pull all of the blockchain data needed from the web3 provider
   async function loadBlockchainData() {
     try {
       const web3 = new Web3(Web3.givenProvider);
@@ -98,7 +104,7 @@ function App() {
   }
 
   const reloadPage = () => {
-    window.location.reload(false)
+    window.location.reload()
   }
 
   //A function that calls the Solidity contract's 'getCount' function
@@ -136,11 +142,21 @@ function App() {
     }
   }
 
+  //Function for when the account is changed
+  //Checks to make sure the account is connected before
+  //loading the data
+  const accountChanged = () => {
+     if (isConnected === true) {
+       loadBlockchainData();
+     }
+   }
+
   //Check to see if a Web3 provider is installed if so, an
   //accountsChanged and isConnected event listeners are added
   if(window.ethereum) {
-    //If the account is changed the page is reloaded for security reasons
-    window.ethereum.on('accountsChanged', reloadPage);
+    //If the account or network is changed the page is reloaded for security reasons
+    window.ethereum.on('accountsChanged', accountChanged);
+    window.ethereum.on('networkChanged', reloadPage);
     window.ethereum.isConnected();
   } else {
     console.error('*** PLEASE USE A METAMASK COMPATIBLE BROWSER ***')
@@ -170,10 +186,10 @@ function App() {
       : ""}
       <div className='hero'>
         <Account isLoading={isLoading} isConnected={isConnected} myAccount={myAccount} />
-          <MetaMaskButton isConnected={isConnected} web3Connect={web3Connect}/>
+        <MetaMaskButton isConnected={isConnected} web3Connect={web3Connect}/>
           {isConnected
           ? ""
-          : <h5 onClick={function(){window.open('https://metamask.io', "_blank")}}>Don't have a MetaMask Account?</h5>}
+          : <button className='no-account-btn' onClick={function(){window.open('https://metamask.io', "_blank")}}>Don't have a MetaMask Account?</button>}
         <div className='account-container'>
           <h1 style={{display: isLoading ? 'flex' : 'none'}}>Loading...</h1>
         </div>
