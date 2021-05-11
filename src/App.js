@@ -180,7 +180,7 @@ function App() {
  
   return (
     <div className='App'>
-      <UpstateLogo />
+      {/* <UpstateLogo /> */}
       {isConnected 
       ? <Network isConnected={isConnected} network={network} /> 
       : ""}
